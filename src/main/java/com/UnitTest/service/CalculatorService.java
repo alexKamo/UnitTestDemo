@@ -7,4 +7,7 @@ public class CalculatorService {
     }
 
 
+    public int square(int a){
+        return a*a;
+    }
 }
