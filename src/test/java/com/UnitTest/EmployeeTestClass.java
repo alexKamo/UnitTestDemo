@@ -8,11 +8,12 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.mockito.Mockito.when;
 
 public class EmployeeTestClass {
+
+    private int id;
 
     @Mock
     private EmployeeRepository employeeRepository;
@@ -22,6 +23,7 @@ public class EmployeeTestClass {
 
     @BeforeEach
     public void setUp(){
+        id = 88;
         MockitoAnnotations.openMocks(this);
     }
 
@@ -29,14 +31,12 @@ public class EmployeeTestClass {
     void shouldReturnNoSuchEmployee(){
 
         String expected = "noSuchEmployee";
-        int id = 5;
         when(employeeRepository.employeeExists(id)).thenReturn(false);
         String actual = employeeService.getInfo(id);
         Assertions.assertEquals(expected,actual);
     }
     @Test
     void shouldReturnAnyEmployee(){
-        int id = 7;
         String role = "developer";
         int  experience = 6;
         String expected = "employeeId " + id + " role " + role
