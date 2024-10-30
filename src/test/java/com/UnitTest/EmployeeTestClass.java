@@ -1,7 +1,6 @@
 package com.UnitTest;
 
 import com.UnitTest.DAO.EmployeeRepository;
-import com.UnitTest.service.EmployeeService;
 import com.UnitTest.service.EmployeeServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,7 +12,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.mockito.Mockito.when;
 
-@SpringBootTest
 public class EmployeeTestClass {
 
     @Mock
