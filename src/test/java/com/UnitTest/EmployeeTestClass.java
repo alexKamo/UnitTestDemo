@@ -48,4 +48,21 @@ public class EmployeeTestClass {
         Assertions.assertEquals(expected,actual);
 
     }
+
+    @Test
+    void shouldNotGetPromotion(){
+        when(employeeRepository.getEmployeeExperience(id)).thenReturn(1);
+        boolean result = employeeService.isEligibleForPromotion(id);
+        Assertions.assertFalse(result);
+
+    }
+
+    @Test
+    void shouldGetPromotion(){
+        when(employeeRepository.getEmployeeExperience(id)).thenReturn(9);
+        boolean result = employeeService.isEligibleForPromotion(id);
+        Assertions.assertTrue(result);
+    }
+
+
 }

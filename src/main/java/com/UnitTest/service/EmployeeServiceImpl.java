@@ -28,6 +28,7 @@ public class EmployeeServiceImpl implements EmployeeService{
 
     @Override
     public boolean isEligibleForPromotion(int id) {
+        if (employeeRepository.getEmployeeExperience(id)>5) return true;
         return false;
     }
 }
