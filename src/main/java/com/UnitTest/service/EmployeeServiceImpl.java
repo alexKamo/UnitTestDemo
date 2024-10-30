@@ -18,7 +18,12 @@ public class EmployeeServiceImpl implements EmployeeService{
 
     @Override
     public String getInfo(int id) {
-        return null;
+        String info = "noSuchEmployee";
+        if (employeeRepository.employeeExists(id)){
+            info = "employeeId " + id + " role " + employeeRepository.getEmployeeRole(id)
+                    + " experience " + employeeRepository.getEmployeeExperience(id);
+        }
+        return info;
     }
 
     @Override
