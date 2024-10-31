@@ -6,5 +6,7 @@ public interface EmployeeService {
 
     boolean isEligibleForPromotion(int id);
 
+    boolean isEligibleForSalaryIncrease(int id);
 
+    int getChildrenAmount(int id);
 }

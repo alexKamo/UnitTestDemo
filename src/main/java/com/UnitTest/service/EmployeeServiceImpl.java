@@ -31,4 +31,14 @@ public class EmployeeServiceImpl implements EmployeeService{
         if (employeeRepository.getEmployeeExperience(id)>5) return true;
         return false;
     }
+
+    @Override
+    public boolean isEligibleForSalaryIncrease(int id) {
+        return false;
+    }
+
+    @Override
+    public int getChildrenAmount(int id) {
+        return 0;
+    }
 }
