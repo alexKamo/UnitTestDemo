@@ -9,4 +9,8 @@ public interface EmployeeRepository {
 
     int getEmployeeExperience(int id);
 
+    boolean isEligibleForSalaryIncrease(int id);
+
+    int getChildrenAmount(int id);
+
 }

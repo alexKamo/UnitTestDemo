@@ -32,13 +32,28 @@ public class EmployeeServiceImpl implements EmployeeService{
         return false;
     }
 
+    /**
+     * employee salary can be increase if:
+     *  - emp is eligible for promotion
+     *  - emp experience > 7
+     *  - emp children amount >= 3
+     *  all three condition is true
+     * @param id
+     * @return
+     */
+
     @Override
     public boolean isEligibleForSalaryIncrease(int id) {
+        if (isEligibleForSalaryIncrease(id) && employeeRepository.getEmployeeExperience(id) > 5 && getChildrenAmount(id) >= 3){
+            return true;
+        }
         return false;
     }
 
     @Override
     public int getChildrenAmount(int id) {
-        return 0;
+        // here you have a query to get amount of children from given emp id
+        // select Count(*) from employees, dependents where employee.id = dependent.id
+        return employeeRepository.getChildrenAmount(id);
     }
 }

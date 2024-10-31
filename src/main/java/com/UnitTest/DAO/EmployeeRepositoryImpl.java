@@ -28,5 +28,15 @@ public class EmployeeRepositoryImpl implements EmployeeRepository{
         return 0;
     }
 
+    @Override
+    public boolean isEligibleForSalaryIncrease(int id) {
+        return false;
+    }
+
+    @Override
+    public int getChildrenAmount(int id) {
+        return 0;
+    }
+
 
 }
