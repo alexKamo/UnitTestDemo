@@ -34,7 +34,6 @@ public class EmployeeServiceImpl implements EmployeeService{
 
     /**
      * employee salary can be increase if:
-     *  - emp is eligible for promotion
      *  - emp experience > 7
      *  - emp children amount >= 3
      *  all three condition is true
@@ -43,11 +42,17 @@ public class EmployeeServiceImpl implements EmployeeService{
      */
 
     @Override
-    public boolean isEligibleForSalaryIncrease(int id) {
-        if (isEligibleForSalaryIncrease(id) && employeeRepository.getEmployeeExperience(id) > 5 && getChildrenAmount(id) >= 3){
-            return true;
+    public Object[] isEligibleForSalaryIncrease(int id) {
+        if (employeeRepository.getEmployeeExperience(id) > 7 && getChildrenAmount(id) >= 3){
+            return new Object[]{true,"Eligible"};
+        } else if (employeeRepository.getEmployeeExperience(id) < 7 && getChildrenAmount(id) < 3) {
+            return new Object[]{false,"Many reasons"};
+        } else if ((employeeRepository.getEmployeeExperience(id) < 7)) {
+            return new Object[]{false,"Not enough experience, less then 7"};
+        } else if (getChildrenAmount(id)<3) {
+            return new Object[]{false,"Not enough children"};
         }
-        return false;
+        return null;
     }
 
     @Override

@@ -9,6 +9,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.Arrays;
+
 import static org.mockito.Mockito.when;
 
 public class EmployeeTestClass {
@@ -64,5 +66,56 @@ public class EmployeeTestClass {
         Assertions.assertTrue(result);
     }
 
+    @Test
+    void shouldReturnTrueForSalaryIncrease(){
+            // given:
+        int exp = 10;
+        int childrenAmount = 3;
+        when(employeeRepository.getEmployeeExperience(id)).thenReturn(exp);
+        when(employeeRepository.getChildrenAmount(id)).thenReturn(childrenAmount);
+
+        Object[] arr = employeeService.isEligibleForSalaryIncrease(id);
+
+        Assertions.assertTrue((Boolean) arr[0]);
+        Assertions.assertEquals("Eligible", arr[1]);
+
+        Object[] expected = new Object[]{true, "Eligible"};
+        Assertions.assertEquals(Arrays.toString(expected),Arrays.toString(arr));
+    }
+
+    @Test
+    void shouldReturnFalseForSalaryIncreaseWithReasonNoEnoughExperience(){
+        int exp = 1;
+        int childrenAmount = 4;
+        when(employeeRepository.getEmployeeExperience(id)).thenReturn(exp);
+        when(employeeRepository.getChildrenAmount(id)).thenReturn(childrenAmount);
+        Object[] arr = employeeService.isEligibleForSalaryIncrease(id);
+        Assertions.assertFalse((Boolean) arr[0]);
+        Assertions.assertEquals("Not enough experience, less then 7",arr[1]);
+        Object[] expected = new Object[]{false,"Not enough experience, less then 7"};
+        Assertions.assertEquals(Arrays.toString(expected),Arrays.toString(arr));
+    }
+
+    @Test
+    void shouldReturnTrueForSalaryIncreaseWithReasonNoEnoughChildren(){
+
+    }
+
+    @Test
+    void shouldReturnTrueForSalaryIncreaseWithManyReason(){
+
+        int exp = 2;
+        int childrenAmount = 2;
+        when(employeeRepository.getEmployeeExperience(id)).thenReturn(exp);
+        when(employeeRepository.getChildrenAmount(id)).thenReturn(childrenAmount);
+
+        Object[] arr = employeeService.isEligibleForSalaryIncrease(id);
+
+        Assertions.assertFalse((Boolean) arr[0]);
+        Assertions.assertEquals("Many reasons", arr[1]);
+
+        Object[] expected = new Object[]{false, "Many reasons"};
+        Assertions.assertEquals(Arrays.toString(expected),Arrays.toString(arr));
+    }
 
 }
