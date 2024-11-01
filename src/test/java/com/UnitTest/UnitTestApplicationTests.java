@@ -4,15 +4,17 @@ import com.UnitTest.DAO.CalculatorRepository;
 import com.UnitTest.service.CalculatorService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.boot.test.context.SpringBootTest;
+
 
 import static org.mockito.Mockito.when;
 
-@SpringBootTest
+//@SpringBootTest
 class UnitTestApplicationTests {
 
 
@@ -33,7 +35,7 @@ class UnitTestApplicationTests {
 		int n1 = 5; int n2 = 15;
 		when(calculatorRepository.findStoredValue()).thenReturn(8);
 		int actual = calculatorService.findAndAdd(n1,n2);
-		int expected = 20;
+		int expected = 28;
 		Assertions.assertEquals(expected,actual);
 	}
 
@@ -45,6 +47,7 @@ class UnitTestApplicationTests {
 		//given
 		int n1 = 5;
 		int n2 = 7;
+
 		int expected = 12;
 
 		// when
@@ -66,4 +69,22 @@ class UnitTestApplicationTests {
 		Assertions.assertEquals(expected,actual);
 	}
 
+	@Test
+	@DisplayName("division test")
+	void divide(){
+		int n1 = 6;
+		int n2 = 3;
+		double expected = n1/n2;
+		double actual = calculatorService.divide(n1,n2);
+		Assertions.assertEquals(expected,actual);
+	}
+
+	@Test
+	@DisplayName("division test with zero")
+	void divideWithZero(){
+		int n1 = 6;
+		int n2 = 0;
+		Executable executable = () -> calculatorService.divide(n1,n2);
+		Assertions.assertThrows(ArithmeticException.class, executable);
+	}
 }

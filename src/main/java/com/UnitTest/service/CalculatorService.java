@@ -26,4 +26,6 @@ public class CalculatorService {
     public int square(int a){
         return a*a;
     }
+
+    public double divide(int a, int b){ return a/b; }
 }

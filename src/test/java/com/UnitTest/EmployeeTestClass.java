@@ -2,9 +2,10 @@ package com.UnitTest;
 
 import com.UnitTest.DAO.EmployeeRepository;
 import com.UnitTest.service.EmployeeServiceImpl;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.function.Executable;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -27,6 +28,18 @@ public class EmployeeTestClass {
     public void setUp(){
         id = 88;
         MockitoAnnotations.openMocks(this);
+    }
+
+    @AfterEach
+    void afterEach(){
+        System.out.println("Say hi from after Each");
+    }
+
+    @AfterAll
+    static void
+    afterAll() {
+
+        System.out.println("Say hi from after All");
     }
 
     @Test
@@ -84,7 +97,8 @@ public class EmployeeTestClass {
     }
 
     @Test
-    void shouldReturnFalseForSalaryIncreaseWithReasonNoEnoughExperience(){
+    @DisplayName("shouldReturnFalseForSalaryIncreaseWithReasonNoEnoughExperience")
+    void noEnExp(){
         int exp = 1;
         int childrenAmount = 4;
         when(employeeRepository.getEmployeeExperience(id)).thenReturn(exp);
@@ -98,7 +112,15 @@ public class EmployeeTestClass {
 
     @Test
     void shouldReturnTrueForSalaryIncreaseWithReasonNoEnoughChildren(){
-
+        int exp = 10;
+        int childrenAmount = 1;
+        when(employeeRepository.getEmployeeExperience(id)).thenReturn(exp);
+        when(employeeRepository.getChildrenAmount(id)).thenReturn(childrenAmount);
+        Object[] arr = employeeService.isEligibleForSalaryIncrease(id);
+        Assertions.assertFalse((Boolean) arr[0]);
+        Assertions.assertEquals("Not enough children",arr[1]);
+        Object[] expected = new Object[]{false,"Not enough children"};
+        Assertions.assertEquals(Arrays.toString(expected),Arrays.toString(arr));
     }
 
     @Test
@@ -117,5 +139,15 @@ public class EmployeeTestClass {
         Object[] expected = new Object[]{false, "Many reasons"};
         Assertions.assertEquals(Arrays.toString(expected),Arrays.toString(arr));
     }
+
+    @Test
+    @DisplayName("negative id test")
+    void shouldThrowError(){
+        id = -4;
+        Executable executable = () -> employeeService.getInfo(id);
+        Assertions.assertThrows(RuntimeException.class,executable);
+    }
+
+
 
 }
